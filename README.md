@@ -12,10 +12,14 @@ Third Party Login Provider Facebook is enabled.
 Sample Login Credentials:
 
 Admin - 
+
   username : Admin@gmail.com
+  
   Password :  Admin@123
+  
 User - 
   username : User@gmail.com
+  
   Password :  User@123
 
 Note:
