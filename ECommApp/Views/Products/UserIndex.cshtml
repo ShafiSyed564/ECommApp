@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ECommApp.Models.Product>
+
+@{
+    ViewBag.Title = "UserIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <style>
+        div.gallery {
+            border: 1px solid #ccc;
+        }
+
+            div.gallery:hover {
+                border: 1px solid #777;
+            }
+
+            div.gallery img {
+                border-radius: 8px;
+                width: 100%;
+            }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .responsive {
+            padding: 0 6px;
+            float: left;
+            width: 24.99999%;
+        }
+
+        @@media only screen and (max-width: 700px) {
+            .responsive {
+                width: 49.99999%;
+                margin: 6px 0;
+            }
+        }
+
+        @@media only screen and (max-width: 500px) {
+            .responsive {
+                width: 100%;
+            }
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .button {
+            background-color: #66ff66;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+    </style>
+</head>
+<div class="row" style="margin-top:20px">
+    <div class="col-md-9">
+        @using (Html.BeginForm("Search", "Products"))
+        {
+            <input type="text" id="search" name="search" style="height:30px;width:300px">
+            <input type="submit" name="submit" value="Search" />
+        }
+    </div>
+    <div class="col-md-3" style="margin-right:0px; text-align:right ">
+        <a href="@Url.Action("Myorder", "AddToCart")" class="w3-btn w3-green">Checkout</a>
+    </div>
+</div>
+
+<div class="row" style="margin-top:10px">
+    @if (Model.Count() == 0)
+    {<br /><p>No Records Found</p> }
+    else
+    {
+        foreach (var m in Model)
+        {
+            <div class="responsive">
+                <div class="gallery">
+                    <a target="_blank" href="@m.ImageURL"><img src="@m.ImageURL" alt=@m.ProductName width="400" height="200"></a>
+                    <div class="desc">@m.ProductName <br /> &#8377;@m.Price</div>
+                </div>
+                <div>
+                    <a id="btn_add" href="@Url.Action("Add", "AddToCart", m)" class="btn btn-info btn-sm" style="margin-left:25%; margin-top:3px;  margin-bottom:12px">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart
+                    </a>
+                </div>
+            </div>
+        }
+    }
+</div>

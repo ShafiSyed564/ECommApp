@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ECommApp.Models.Product>
+
+@{
+    ViewBag.Title = "My Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @{ int sum = 0; }
+    <h2>My Cart</h2>
+    @if (Model == null)
+    {
+        <div id="dvContents">
+            <table class="table table-hover" width="100%">
+                <thead>
+                    <tr>No Items Available</tr>
+                </thead>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div id="dvContents">
+            <table class="table table-hover" width="100%">
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model)
+                    {
+                        <tr>
+                            <td>@x.Id</td>
+                            <td>@x.ProductName</td>
+                            <td><img id="img1" src="@x.ImageURL" height="100" width="75" /></td>
+                            <td>&#8377;@x.Price</td>
+                            <td>
+                                <button id="btn_delete" class="label label-primary" data-slno="@x.Id" onclick="location.href='@Url.Action("Remove", "AddToCart", x)'">
+                                    <img src="~/Icons/delete.png" height="30" width="30" />
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                @foreach (var x in Model)
+                {
+                    sum = Convert.ToInt32(x.Price) + sum;
+                }
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><b>Total</b></td>
+                        <td>&#8377;  @sum</td>
+                    </tr>
+                </tfoot>
+            </table>
+            @Html.ActionLink("Continue Shopping", "UserIndex", "Products", null, new { @class = "btn btn-success" })
+            @Html.ActionLink("Place Order", "OrderConfirmation", "AddToCart", null, new { @class = "btn btn-warning" })
+        </div>
+    }
+</body>
